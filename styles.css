@@ -146,14 +146,20 @@ header h1 {
 /* 選項卡片 */
 .options-grid {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 15px;
     margin-bottom: 30px;
 }
 
 @media (min-width: 480px) {
     .options-grid {
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (min-width: 768px) {
+    .options-grid {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
     }
 }
 
