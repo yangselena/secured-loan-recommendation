@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="title" content="小額貸款推薦哪一家">
+    <meta name="description" content="快速撥貸，根據你的基本資料及狀況推薦你最適合的小額貸款平台">
+    <title>小額貸款推薦哪一家</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>小額貸款推薦</h1>
+            <p class="subtitle">快速撥貸，根據你的基本資料及狀況推薦你最適合的小額貸款平台</p>
+        </header>
+
+        <!-- 進度指示器 -->
+        <div class="progress-container">
+            <div class="progress-step active" id="step1-indicator">
+                <span class="step-number">1</span>
+                <span class="step-label">身份確認</span>
+            </div>
+            <div class="progress-line"></div>
+            <div class="progress-step" id="step2-indicator">
+                <span class="step-number">2</span>
+                <span class="step-label">資金需求</span>
+            </div>
+            <div class="progress-line"></div>
+            <div class="progress-step" id="step3-indicator">
+                <span class="step-number">3</span>
+                <span class="step-label">推薦結果</span>
+            </div>
+        </div>
+
+        <!-- 第一步：身份選擇 -->
+        <section class="form-section active" id="step1">
+            <h2>第一步：您目前的身份是？</h2>
+            <div class="options-grid">
+                <label class="option-card">
+                    <input type="radio" name="identity" value="student">
+                    <div class="card-content">
+                        <span class="card-icon">👨‍🎓</span>
+                        <span class="card-title">學生</span>
+                    </div>
+                </label>
+                <label class="option-card">
+                    <input type="radio" name="identity" value="employee">
+                    <div class="card-content">
+                        <span class="card-icon">💼</span>
+                        <span class="card-title">上班族</span>
+                    </div>
+                </label>
+                <label class="option-card">
+                    <input type="radio" name="identity" value="freelancer">
+                    <div class="card-content">
+                        <span class="card-icon">🎯</span>
+                        <span class="card-title">自由業</span>
+                    </div>
+                </label>
+                <label class="option-card">
+                    <input type="radio" name="identity" value="unemployed">
+                    <div class="card-content">
+                        <span class="card-icon">🔍</span>
+                        <span class="card-title">待業中</span>
+                    </div>
+                </label>
+            </div>
+            <button class="btn btn-primary" onclick="nextStep(1)">下一步</button>
+        </section>
+
+        <!-- 第二步：資金需求 -->
+        <section class="form-section" id="step2">
+            <h2>第二步：您需要多少資金？</h2>
+            <div class="amount-input-group">
+                <label for="amount">借款金額 (新台幣)</label>
+                <div class="input-wrapper">
+                    <span class="currency">NT$</span>
+                    <input type="number" id="amount" placeholder="例如：10000" min="1000" max="300000">
+                </div>
+                <div class="amount-presets">
+                    <button class="preset-btn" onclick="setAmount(10000)">10,000</button>
+                    <button class="preset-btn" onclick="setAmount(30000)">30,000</button>
+                    <button class="preset-btn" onclick="setAmount(50000)">50,000</button>
+                    <button class="preset-btn" onclick="setAmount(100000)">100,000</button>
+                </div>
+            </div>
+
+            <div class="loan-type-group">
+                <label>貸款類型 (可複選)</label>
+                <div class="checkboxes-container">
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="loanType" value="phone">
+                        <span class="checkbox-label">📱 手機貸</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="loanType" value="motorcycle">
+                        <span class="checkbox-label">🏍️ 機車貸</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="prevStep(2)">上一步</button>
+                <button class="btn btn-primary" onclick="nextStep(2)">下一步</button>
+            </div>
+        </section>
+
+        <!-- 第三步：推薦結果 -->
+        <section class="form-section" id="step3">
+            <h2>第三步：推薦結果</h2>
+            <div id="recommendation-container" class="recommendation-container">
+                <!-- 推薦卡片將由JavaScript動態生成 -->
+            </div>
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="prevStep(3)">上一步</button>
+                <button class="btn btn-primary" onclick="restartForm()">重新開始</button>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
