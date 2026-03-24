@@ -46,7 +46,7 @@ const loanPlatforms = [
         fee: '便宜',
         description: '快速撥貸，高推薦度，適合上班族和自由業使用',
         suitableFor: ['employee', 'freelancer'],
-        link: 'https://juji.com.tw/'
+        link: 'https://juji.tw/loan-estimation'
     },
     {
         id: 5,
