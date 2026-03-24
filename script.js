@@ -10,7 +10,7 @@ const loanPlatforms = [
         fee: '便宜',
         description: '過件率最高，撥款速度快，適合急需資金的用戶',
         suitableFor: ['student', 'employee', 'freelancer'],
-        link: 'https://www.rakuten.com.tw/'
+        link: 'https://www.rakuten-bank.com.tw/portal/campaign/loan'
     },
     {
         id: 2,
