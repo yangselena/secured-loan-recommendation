@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="title" content="貸款投放查詢">
+    <meta name="description" content="查詢您的貸款投放狀態與進度">
+    <title>貸款投放查詢</title>
+    <link rel="stylesheet" href="styles.css?v=4">
+    <link rel="stylesheet" href="disbursement.css?v=1">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>貸款投放查詢</h1>
+            <p class="subtitle">查詢您的貸款申請狀態與放款進度</p>
+        </header>
+
+        <!-- 查詢區域 -->
+        <section class="form-section active" id="query-section">
+            <h2>請輸入查詢資訊</h2>
+            <div class="query-form">
+                <div class="input-group">
+                    <label for="applicationId">申請編號</label>
+                    <input type="text" id="applicationId" placeholder="例如：LN2024031500001">
+                </div>
+                <div class="input-group">
+                    <label for="phoneNumber">手機號碼</label>
+                    <input type="tel" id="phoneNumber" placeholder="例如：0912345678">
+                </div>
+                <button class="btn btn-primary" onclick="queryDisbursement()">查詢進度</button>
+            </div>
+
+            <!-- Demo 快速查詢 -->
+            <div class="demo-section">
+                <p class="demo-hint">Demo 快速體驗</p>
+                <div class="demo-buttons">
+                    <button class="demo-btn" onclick="loadDemo('pending')">審核中</button>
+                    <button class="demo-btn" onclick="loadDemo('approved')">已核准</button>
+                    <button class="demo-btn" onclick="loadDemo('disbursing')">撥款中</button>
+                    <button class="demo-btn" onclick="loadDemo('completed')">已完成</button>
+                    <button class="demo-btn rejected" onclick="loadDemo('rejected')">未通過</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 結果區域 -->
+        <section class="form-section" id="result-section">
+            <div class="back-link">
+                <button class="btn-back" onclick="backToQuery()">← 返回查詢</button>
+            </div>
+
+            <!-- 申請人資訊 -->
+            <div class="info-card">
+                <h3>申請人資訊</h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">申請編號</span>
+                        <span class="info-value" id="result-applicationId">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">申請日期</span>
+                        <span class="info-value" id="result-applicationDate">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">貸款平台</span>
+                        <span class="info-value" id="result-platform">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">申請金額</span>
+                        <span class="info-value" id="result-amount">-</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 放款進度 -->
+            <div class="progress-card">
+                <h3>放款進度</h3>
+                <div class="status-badge" id="status-badge">審核中</div>
+
+                <div class="timeline">
+                    <div class="timeline-item completed" id="timeline-submitted">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <span class="timeline-title">申請已送出</span>
+                            <span class="timeline-date" id="date-submitted">-</span>
+                        </div>
+                    </div>
+                    <div class="timeline-item" id="timeline-reviewing">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <span class="timeline-title">審核中</span>
+                            <span class="timeline-date" id="date-reviewing">-</span>
+                        </div>
+                    </div>
+                    <div class="timeline-item" id="timeline-approved">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <span class="timeline-title">審核通過</span>
+                            <span class="timeline-date" id="date-approved">-</span>
+                        </div>
+                    </div>
+                    <div class="timeline-item" id="timeline-disbursing">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <span class="timeline-title">撥款處理中</span>
+                            <span class="timeline-date" id="date-disbursing">-</span>
+                        </div>
+                    </div>
+                    <div class="timeline-item" id="timeline-completed">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <span class="timeline-title">撥款完成</span>
+                            <span class="timeline-date" id="date-completed">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 放款詳情 -->
+            <div class="detail-card" id="disbursement-details" style="display: none;">
+                <h3>放款詳情</h3>
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <span class="detail-label">核准金額</span>
+                        <span class="detail-value highlight" id="approved-amount">-</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">年利率</span>
+                        <span class="detail-value" id="interest-rate">-</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">還款期數</span>
+                        <span class="detail-value" id="repayment-period">-</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">每期還款</span>
+                        <span class="detail-value" id="monthly-payment">-</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">放款帳戶</span>
+                        <span class="detail-value" id="bank-account">-</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">首期還款日</span>
+                        <span class="detail-value" id="first-payment-date">-</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 拒絕原因 -->
+            <div class="rejection-card" id="rejection-details" style="display: none;">
+                <h3>審核結果</h3>
+                <div class="rejection-content">
+                    <div class="rejection-icon">!</div>
+                    <p class="rejection-reason" id="rejection-reason">-</p>
+                    <p class="rejection-suggestion" id="rejection-suggestion">-</p>
+                </div>
+            </div>
+
+            <!-- 操作按鈕 -->
+            <div class="action-buttons">
+                <button class="btn btn-secondary" onclick="window.location.href='index.html'">重新申請</button>
+                <button class="btn btn-primary" onclick="contactSupport()">聯繫客服</button>
+            </div>
+        </section>
+    </div>
+
+    <script src="disbursement.js?v=1"></script>
+</body>
+</html>
